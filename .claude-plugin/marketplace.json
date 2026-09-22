@@ -1,0 +1,28 @@
+{
+  "name": "ui-ux-marketplace",
+  "owner": {
+    "name": "somasuraj",
+    "url": "https://github.com/somasuraj"
+  },
+  "description": "UI/UX design toolkit for Claude Code: create, refactor, and audit interfaces with measurable checks.",
+  "plugins": [
+    {
+      "name": "ui-ux",
+      "source": "./plugins/ui-ux",
+      "description": "Create, refactor, and audit app UI/UX with principles from Refactoring UI and Don't Make Me Think: a design skill with checklists, tokens and recipes, scanner / screenshot / contrast / report and refactor-fidelity scripts, five commands, and a ui-ux-designer agent.",
+      "version": "1.0.0",
+      "category": "design",
+      "keywords": [
+        "ui",
+        "ux",
+        "design",
+        "usability",
+        "accessibility",
+        "audit",
+        "refactor",
+        "design-tokens",
+        "tailwind"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Team tasks - Tasklane</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+
+  <header class="app-header">
+    <div class="app-header__inner">
+      <a class="brand" href="tasks.html">
+        <svg class="brand__mark" viewBox="0 0 24 24" aria-hidden="true">
+          <rect width="24" height="24" rx="6" fill="hsl(213 82% 42%)"/>
+          <path d="M7 12.5l3.2 3.2L17 9" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Tasklane
+      </a>
+      <nav class="app-nav" aria-label="Main">
+        <a href="tasks.html" aria-current="page">Team tasks</a>
+      </nav>
+      <div class="app-header__user">
+        <span class="avatar avatar--sm" aria-hidden="true">PN</span>
+        <span>Priya Nair</span>
+      </div>
+    </div>
+  </header>
+
+  <main id="main" class="page">
+    <div class="page-head">
+      <div>
+        <h1 class="page-title">Team tasks</h1>
+        <p class="page-summary" id="summary"><span id="open-count">6</span> open, <strong><span id="overdue-count">2</span> overdue</strong></p>
+      </div>
+      <a class="btn btn--primary" id="new-task-top" href="new-task.html">New task</a>
+    </div>
+
+    <div class="banner" id="created-banner" role="status" hidden>
+      <span aria-hidden="true">&#10003;</span>
+      <span>Task created: <strong id="created-title"></strong></span>
+    </div>
+
+    <div class="filters" id="filters" role="group" aria-label="Filter by status">
+      <button class="filter" type="button" data-filter="all" aria-pressed="true">All <span class="filter__count"></span></button>
+      <button class="filter" type="button" data-filter="todo" aria-pressed="false">To do <span class="filter__count"></span></button>
+      <button class="filter" type="button" data-filter="progress" aria-pressed="false">In progress <span class="filter__count"></span></button>
+      <button class="filter" type="button" data-filter="review" aria-pressed="false">In review <span class="filter__count"></span></button>
+      <button class="filter" type="button" data-filter="done" aria-pressed="false">Done <span class="filter__count"></span></button>
+    </div>
+
+    <div class="card" id="task-card">
+      <table class="tasks">
+        <caption class="visually-hidden">Team tasks</caption>
+        <thead>
+          <tr>
+            <th scope="col">Task</th>
+            <th scope="col">Assignee</th>
+            <th scope="col">Due</th>
+            <th scope="col">Status</th>
+            <th scope="col">Priority</th>
+          </tr>
+        </thead>
+        <tbody id="task-rows">
+          <tr data-status="progress">
+            <td><span class="task__title">Fix login redirect loop on Safari</span><span class="task__project">Website</span></td>
+            <td><span class="person"><span class="avatar" aria-hidden="true">PN</span>Priya Nair</span></td>
+            <td><span class="due due--overdue">Overdue, 18 Sep</span></td>
+            <td><span class="pill pill--progress">In progress</span></td>
+            <td><span class="priority priority--high">High</span></td>
+          </tr>
+          <tr data-status="todo">
+            <td><span class="task__title">Send contractor agreements for signature</span><span class="task__project">Operations</span></td>
+            <td><span class="person"><span class="avatar" aria-hidden="true">ES</span>Elena Sokolova</span></td>
+            <td><span class="due due--overdue">Overdue, 19 Sep</span></td>
+            <td><span class="pill pill--todo">To do</span></td>
+            <td><span class="priority">Medium</span></td>
+          </tr>
+          <tr data-status="review">
+            <td><span class="task__title">Draft Q4 onboarding email sequence</span><span class="task__project">Marketing</span></td>
+            <td><span class="person"><span class="avatar" aria-hidden="true">MH</span>Marcus Hale</span></td>
+            <td><span class="due due--today">Today</span></td>
+            <td><span class="pill pill--review">In review</span></td>
+            <td><span class="priority priority--high">High</span></td>
+          </tr>
+          <tr data-status="todo">
+            <td><span class="task__title">Update pricing page copy for annual plans</span><span class="task__project">Website</span></td>
+            <td><span class="person"><span class="avatar" aria-hidden="true">ES</span>Elena Sokolova</span></td>
+            <td><span class="due">Wed, 23 Sep</span></td>
+            <td><span class="pill pill--todo">To do</span></td>
+            <td><span class="priority">Medium</span></td>
+          </tr>
+          <tr data-status="progress">
+            <td><span class="task__title">Migrate invoices to the new billing provider</span><span class="task__project">Operations</span></td>
+            <td><span class="person"><span class="avatar" aria-hidden="true">TR</span>Tom&aacute;s Rivera</span></td>
+            <td><span class="due">Fri, 25 Sep</span></td>
+            <td><span class="pill pill--progress">In progress</span></td>
+            <td><span class="priority priority--high">High</span></td>
+          </tr>
+          <tr data-status="todo">
+            <td><span class="task__title">Interview five customers about CSV exports</span><span class="task__project">Research</span></td>
+            <td><span class="person"><span class="avatar" aria-hidden="true">AB</span>Aisha Bello</span></td>
+            <td><span class="due">Wed, 30 Sep</span></td>
+            <td><span class="pill pill--todo">To do</span></td>
+            <td><span class="priority priority--low">Low</span></td>
+          </tr>
+          <tr data-status="done" class="task--done">
+            <td><span class="task__title">Set up weekly database backup report</span><span class="task__project">Operations</span></td>
+            <td><span class="person"><span class="avatar" aria-hidden="true">TR</span>Tom&aacute;s Rivera</span></td>
+            <td><span class="due">Mon, 14 Sep</span></td>
+            <td><span class="pill pill--done">Done</span></td>
+            <td><span class="priority priority--low">Low</span></td>
+          </tr>
+        </tbody>
+      </table>
+      <p class="no-match" id="no-match" hidden>No tasks with this status.</p>
+    </div>
+
+    <div class="card empty" id="empty" hidden>
+      <svg class="empty__art" viewBox="0 0 64 64" aria-hidden="true">
+        <rect x="10" y="8" width="44" height="48" rx="6" fill="hsl(204 95% 94%)"/>
+        <path d="M20 24h24M20 34h24M20 44h14" stroke="hsl(209 84% 62%)" stroke-width="4" stroke-linecap="round"/>
+      </svg>
+      <h2 class="empty__title">No tasks yet</h2>
+      <p class="empty__text">Add the first task and assign it to someone on the team.</p>
+      <a class="btn btn--primary" href="new-task.html">New task</a>
+    </div>
+  </main>
+
+  <script>
+    (function () {
+      var params = new URLSearchParams(location.search);
+      var rows = document.getElementById('task-rows');
+      var $ = function (id) { return document.getElementById(id); };
+
+      // Demo state: tasks.html?state=empty
+      if (params.get('state') === 'empty') {
+        ['filters', 'task-card', 'summary', 'new-task-top'].forEach(function (id) { $(id).hidden = true; });
+        $('empty').hidden = false;
+        return;
+      }
+
+      // A task sent from new-task.html arrives in the query string.
+      var title = (params.get('title') || '').trim();
+      if (title) {
+        var names = { PN: 'Priya Nair', ES: 'Elena Sokolova', MH: 'Marcus Hale', TR: 'Tomás Rivera', AB: 'Aisha Bello' };
+        var who = params.get('assignee');
+        var due = params.get('due');
+        var prio = { high: 'High', low: 'Low' }[params.get('priority')] || 'Medium';
+        var dueText = 'No due date', dueClass = 'due due--none';
+        if (/^\d{4}-\d\d-\d\d$/.test(due || '')) {
+          var d = new Date(due + 'T00:00'), today = new Date(); today.setHours(0, 0, 0, 0);
+          var dm = d.getDate() + ' ' + d.toLocaleDateString('en-GB', { month: 'short' });
+          var label = d.toLocaleDateString('en-GB', { weekday: 'short' }) + ', ' + dm;
+          if (d < today) { dueText = 'Overdue, ' + dm; dueClass = 'due due--overdue'; }
+          else if (+d === +today) { dueText = 'Today'; dueClass = 'due due--today'; }
+          else { dueText = label; dueClass = 'due'; }
+        }
+        var tr = document.createElement('tr');
+        tr.dataset.status = 'todo';
+        tr.className = 'task--new';
+        tr.innerHTML = '<td><span class="task__title"></span></td>' +
+          '<td><span class="person"></span></td><td><span></span></td>' +
+          '<td><span class="pill pill--todo">To do</span></td><td><span class="priority"></span></td>';
+        tr.querySelector('.task__title').textContent = title;
+        var person = tr.querySelector('.person');
+        if (names[who]) {
+          var av = document.createElement('span');
+          av.className = 'avatar'; av.setAttribute('aria-hidden', 'true'); av.textContent = who;
+          person.append(av, names[who]);
+        } else { person.textContent = 'Unassigned'; }
+        var dueEl = tr.cells[2].firstChild; dueEl.className = dueClass; dueEl.textContent = dueText;
+        var p = tr.querySelector('.priority'); p.textContent = prio;
+        if (prio !== 'Medium') p.classList.add('priority--' + prio.toLowerCase());
+        rows.prepend(tr);
+        $('created-title').textContent = title;
+        $('created-banner').hidden = false;
+      }
+
+      // Counts and status filter
+      var all = Array.prototype.slice.call(rows.rows);
+      $('open-count').textContent = all.filter(function (r) { return r.dataset.status !== 'done'; }).length;
+      $('overdue-count').textContent = rows.querySelectorAll('.due--overdue').length;
+      var buttons = document.querySelectorAll('.filter');
+      buttons.forEach(function (b) {
+        var f = b.dataset.filter;
+        b.querySelector('.filter__count').textContent =
+          all.filter(function (r) { return f === 'all' || r.dataset.status === f; }).length;
+        b.addEventListener('click', function () {
+          var shown = 0;
+          buttons.forEach(function (o) { o.setAttribute('aria-pressed', String(o === b)); });
+          all.forEach(function (r) {
+            r.hidden = !(f === 'all' || r.dataset.status === f);
+            if (!r.hidden) shown++;
+          });
+          $('no-match').hidden = shown > 0;
+        });
+      });
+    })();
+  </script>
+</body>
+</html>

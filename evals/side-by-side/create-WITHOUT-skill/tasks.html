@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Team tasks - Tasklane</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="app-header">
+    <div class="app-header__inner">
+      <a class="logo" href="tasks.html">
+        <span class="logo__mark" aria-hidden="true">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5l3.2 3.2L13 4.8"/></svg>
+        </span>
+        Tasklane
+      </a>
+      <nav class="main-nav" aria-label="Main">
+        <a href="tasks.html" aria-current="page">Team tasks</a>
+      </nav>
+      <div class="user-chip">
+        <span class="avatar" aria-hidden="true">PN</span>
+        <span>Priya Nair</span>
+      </div>
+    </div>
+  </header>
+
+  <main id="main" class="page">
+    <div class="page-head">
+      <div>
+        <h1>Team tasks</h1>
+        <p>Product team - 7 tasks, 6 still open</p>
+      </div>
+      <a class="btn btn--primary" href="new-task.html">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M7 1.5v11M1.5 7h11"/></svg>
+        New task
+      </a>
+    </div>
+
+    <ul class="stats" aria-label="Summary">
+      <li class="stat"><span class="stat__value">6</span><span class="stat__label">Open tasks</span></li>
+      <li class="stat stat--alert"><span class="stat__value">2</span><span class="stat__label">Overdue</span></li>
+      <li class="stat"><span class="stat__value">3</span><span class="stat__label">Due this week</span></li>
+      <li class="stat"><span class="stat__value">1</span><span class="stat__label">Completed</span></li>
+    </ul>
+
+    <div class="toolbar">
+      <div class="chips" role="group" aria-label="Filter by status">
+        <button type="button" class="chip" data-filter="all" aria-pressed="true">All <span class="chip__count">7</span></button>
+        <button type="button" class="chip" data-filter="todo" aria-pressed="false">To do <span class="chip__count">2</span></button>
+        <button type="button" class="chip" data-filter="progress" aria-pressed="false">In progress <span class="chip__count">2</span></button>
+        <button type="button" class="chip" data-filter="review" aria-pressed="false">In review <span class="chip__count">1</span></button>
+        <button type="button" class="chip" data-filter="blocked" aria-pressed="false">Blocked <span class="chip__count">1</span></button>
+        <button type="button" class="chip" data-filter="done" aria-pressed="false">Done <span class="chip__count">1</span></button>
+      </div>
+      <div class="search">
+        <label class="visually-hidden" for="search">Search tasks</label>
+        <input class="input" type="search" id="search" placeholder="Search by task or assignee">
+      </div>
+    </div>
+
+    <div class="card">
+      <table class="task-table">
+        <caption class="visually-hidden">Team tasks, sorted by due date</caption>
+        <thead>
+          <tr>
+            <th scope="col">Task</th>
+            <th scope="col">Assignee</th>
+            <th scope="col">Due date</th>
+            <th scope="col">Status</th>
+            <th scope="col">Priority</th>
+          </tr>
+        </thead>
+        <tbody id="task-rows">
+          <tr data-status="blocked">
+            <td>
+              <a class="task-title" href="#">Fix checkout timeout on slow connections</a>
+              <span class="task-meta">TL-142 - Web app</span>
+            </td>
+            <td data-label="Assignee"><span class="assignee"><span class="avatar avatar--b" aria-hidden="true">MO</span>Marcus Oyelaran</span></td>
+            <td data-label="Due date"><span class="due due--overdue">Sep 17, 2026<span class="due__hint">Overdue by 4 days</span></span></td>
+            <td data-label="Status"><span class="badge badge--blocked">Blocked</span></td>
+            <td data-label="Priority"><span class="priority priority--urgent"><span class="priority__bars" aria-hidden="true"><i></i><i></i><i></i></span>Urgent</span></td>
+          </tr>
+          <tr data-status="progress">
+            <td>
+              <a class="task-title" href="#">Write Q4 onboarding email sequence</a>
+              <span class="task-meta">TL-138 - Marketing</span>
+            </td>
+            <td data-label="Assignee"><span class="assignee"><span class="avatar avatar--c" aria-hidden="true">HS</span>Hannah Schmidt</span></td>
+            <td data-label="Due date"><span class="due due--overdue">Sep 18, 2026<span class="due__hint">Overdue by 3 days</span></span></td>
+            <td data-label="Status"><span class="badge badge--progress">In progress</span></td>
+            <td data-label="Priority"><span class="priority priority--medium"><span class="priority__bars" aria-hidden="true"><i></i><i></i><i></i></span>Medium</span></td>
+          </tr>
+          <tr data-status="review">
+            <td>
+              <a class="task-title" href="#">Redesign pricing page hero section</a>
+              <span class="task-meta">TL-145 - Website</span>
+            </td>
+            <td data-label="Assignee"><span class="assignee"><span class="avatar" aria-hidden="true">PN</span>Priya Nair</span></td>
+            <td data-label="Due date"><span class="due due--soon">Sep 22, 2026<span class="due__hint">Due tomorrow</span></span></td>
+            <td data-label="Status"><span class="badge badge--review">In review</span></td>
+            <td data-label="Priority"><span class="priority priority--high"><span class="priority__bars" aria-hidden="true"><i></i><i></i><i></i></span>High</span></td>
+          </tr>
+          <tr data-status="progress">
+            <td>
+              <a class="task-title" href="#">Migrate user avatars to new storage bucket</a>
+              <span class="task-meta">TL-149 - Infrastructure</span>
+            </td>
+            <td data-label="Assignee"><span class="assignee"><span class="avatar avatar--d" aria-hidden="true">DK</span>Daniel Kim</span></td>
+            <td data-label="Due date"><span class="due">Sep 24, 2026<span class="due__hint">In 3 days</span></span></td>
+            <td data-label="Status"><span class="badge badge--progress">In progress</span></td>
+            <td data-label="Priority"><span class="priority priority--high"><span class="priority__bars" aria-hidden="true"><i></i><i></i><i></i></span>High</span></td>
+          </tr>
+          <tr data-status="todo">
+            <td>
+              <a class="task-title" href="#">Interview five customers about reporting needs</a>
+              <span class="task-meta">TL-151 - Research</span>
+            </td>
+            <td data-label="Assignee"><span class="assignee"><span class="avatar avatar--e" aria-hidden="true">SA</span>Sofia Alvarez</span></td>
+            <td data-label="Due date"><span class="due">Sep 25, 2026<span class="due__hint">In 4 days</span></span></td>
+            <td data-label="Status"><span class="badge badge--todo">To do</span></td>
+            <td data-label="Priority"><span class="priority priority--medium"><span class="priority__bars" aria-hidden="true"><i></i><i></i><i></i></span>Medium</span></td>
+          </tr>
+          <tr data-status="todo">
+            <td>
+              <a class="task-title" href="#">Update help center screenshots for v3.2</a>
+              <span class="task-meta">TL-153 - Support</span>
+            </td>
+            <td data-label="Assignee"><span class="assignee"><span class="avatar avatar--c" aria-hidden="true">HS</span>Hannah Schmidt</span></td>
+            <td data-label="Due date"><span class="due">Oct 6, 2026<span class="due__hint">In 15 days</span></span></td>
+            <td data-label="Status"><span class="badge badge--todo">To do</span></td>
+            <td data-label="Priority"><span class="priority priority--low"><span class="priority__bars" aria-hidden="true"><i></i><i></i><i></i></span>Low</span></td>
+          </tr>
+          <tr data-status="done" class="is-done">
+            <td>
+              <a class="task-title" href="#">Set up error alerting for payments service</a>
+              <span class="task-meta">TL-131 - Infrastructure</span>
+            </td>
+            <td data-label="Assignee"><span class="assignee"><span class="avatar avatar--d" aria-hidden="true">DK</span>Daniel Kim</span></td>
+            <td data-label="Due date"><span class="due">Sep 16, 2026<span class="due__hint">Completed Sep 15</span></span></td>
+            <td data-label="Status"><span class="badge badge--done">Done</span></td>
+            <td data-label="Priority"><span class="priority priority--high"><span class="priority__bars" aria-hidden="true"><i></i><i></i><i></i></span>High</span></td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="empty" id="empty" hidden>
+        <strong>No tasks match</strong>
+        Try a different status or clear the search.
+      </div>
+    </div>
+
+    <p class="table-foot" id="result-count" aria-live="polite">Showing 7 of 7 tasks, sorted by due date (open tasks first)</p>
+  </main>
+
+  <script>
+    (function () {
+      var chips = document.querySelectorAll('.chip');
+      var rows = document.querySelectorAll('#task-rows tr');
+      var search = document.getElementById('search');
+      var empty = document.getElementById('empty');
+      var count = document.getElementById('result-count');
+      var table = document.querySelector('.task-table');
+      var filter = 'all';
+
+      function apply() {
+        var q = search.value.trim().toLowerCase();
+        var shown = 0;
+        rows.forEach(function (row) {
+          var ok = (filter === 'all' || row.dataset.status === filter) &&
+                   (!q || row.textContent.toLowerCase().indexOf(q) !== -1);
+          row.hidden = !ok;
+          if (ok) shown++;
+        });
+        empty.hidden = shown !== 0;
+        table.hidden = shown === 0;
+        count.textContent = 'Showing ' + shown + ' of ' + rows.length + ' tasks, sorted by due date (open tasks first)';
+      }
+
+      chips.forEach(function (chip) {
+        chip.addEventListener('click', function () {
+          filter = chip.dataset.filter;
+          chips.forEach(function (c) { c.setAttribute('aria-pressed', String(c === chip)); });
+          apply();
+        });
+      });
+      search.addEventListener('input', apply);
+    })();
+  </script>
+</body>
+</html>

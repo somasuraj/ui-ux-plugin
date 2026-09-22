@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>New task - Tasklane</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="app-header">
+    <div class="app-header__inner">
+      <a class="logo" href="tasks.html">
+        <span class="logo__mark" aria-hidden="true">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5l3.2 3.2L13 4.8"/></svg>
+        </span>
+        Tasklane
+      </a>
+      <nav class="main-nav" aria-label="Main">
+        <a href="tasks.html">Team tasks</a>
+      </nav>
+      <div class="user-chip">
+        <span class="avatar" aria-hidden="true">PN</span>
+        <span>Priya Nair</span>
+      </div>
+    </div>
+  </header>
+
+  <main id="main" class="page page--narrow">
+    <a class="back-link" href="tasks.html"><span aria-hidden="true">&larr;</span> Back to team tasks</a>
+
+    <div class="page-head">
+      <div>
+        <h1>New task</h1>
+        <p>Only the title is required. You can fill in the rest later.</p>
+      </div>
+    </div>
+
+    <div class="alert" id="success" role="status">
+      Task created. <a href="tasks.html">View team tasks</a> or add another below.
+    </div>
+
+    <form class="card form-card" id="task-form" novalidate>
+      <div class="field" id="field-title">
+        <label for="title">Title</label>
+        <input class="input" type="text" id="title" name="title" required maxlength="120" autofocus
+               placeholder="e.g. Draft release notes for v3.2">
+        <p class="error-msg" id="title-error">Enter a title so the team knows what this task is.</p>
+      </div>
+
+      <div class="field">
+        <label for="description">Description <span class="optional">(optional)</span></label>
+        <textarea class="input" id="description" name="description" aria-describedby="description-hint"></textarea>
+        <p class="hint" id="description-hint">Add context, links, or what "done" looks like.</p>
+      </div>
+
+      <div class="field-row">
+        <div class="field">
+          <label for="assignee">Assignee</label>
+          <select class="input" id="assignee" name="assignee">
+            <option value="">Unassigned</option>
+            <option selected>Priya Nair (you)</option>
+            <option>Daniel Kim</option>
+            <option>Hannah Schmidt</option>
+            <option>Marcus Oyelaran</option>
+            <option>Sofia Alvarez</option>
+          </select>
+        </div>
+
+        <div class="field" id="field-due">
+          <label for="due">Due date <span class="optional">(optional)</span></label>
+          <input class="input" type="date" id="due" name="due" min="2026-09-21">
+          <p class="error-msg" id="due-error">Choose today or a later date.</p>
+        </div>
+      </div>
+
+      <div class="field">
+        <fieldset>
+          <legend>Priority</legend>
+          <div class="segmented">
+            <input type="radio" name="priority" id="p-low" value="low"><label for="p-low">Low</label>
+            <input type="radio" name="priority" id="p-medium" value="medium" checked><label for="p-medium">Medium</label>
+            <input type="radio" name="priority" id="p-high" value="high"><label for="p-high">High</label>
+            <input type="radio" name="priority" id="p-urgent" value="urgent"><label for="p-urgent">Urgent</label>
+          </div>
+        </fieldset>
+      </div>
+
+      <div class="field">
+        <label for="status">Status</label>
+        <select class="input" id="status" name="status">
+          <option selected>To do</option>
+          <option>In progress</option>
+          <option>In review</option>
+          <option>Blocked</option>
+          <option>Done</option>
+        </select>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="btn btn--primary">Create task</button>
+        <a class="btn btn--secondary" href="tasks.html">Cancel</a>
+      </div>
+    </form>
+  </main>
+
+  <script>
+    (function () {
+      var form = document.getElementById('task-form');
+      var title = document.getElementById('title');
+      var due = document.getElementById('due');
+      var success = document.getElementById('success');
+
+      function check(input, fieldId) {
+        var bad = !input.checkValidity() || (input === title && !input.value.trim());
+        document.getElementById(fieldId).classList.toggle('has-error', bad);
+        input.setAttribute('aria-invalid', String(bad));
+        if (bad) input.setAttribute('aria-describedby', input.id + '-error');
+        else input.removeAttribute('aria-describedby');
+        return !bad;
+      }
+
+      title.addEventListener('input', function () {
+        if (title.getAttribute('aria-invalid') === 'true') check(title, 'field-title');
+      });
+      due.addEventListener('change', function () { check(due, 'field-due'); });
+
+      form.addEventListener('submit', function (e) {
+        e.preventDefault(); // Static demo: no backend to post to.
+        var okTitle = check(title, 'field-title');
+        var okDue = check(due, 'field-due');
+        if (!okTitle) { title.focus(); return; }
+        if (!okDue) { due.focus(); return; }
+        form.reset();
+        success.classList.add('is-visible');
+        success.scrollIntoView({ block: 'nearest' });
+        title.focus();
+      });
+    })();
+  </script>
+</body>
+</html>

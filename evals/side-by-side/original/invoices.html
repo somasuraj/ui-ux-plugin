@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Billing Documents Manager</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="topbar">
+  <div class="utils">
+    <a href="#">Help</a>
+    <a href="#">Account</a>
+    <a href="#">Log out</a>
+  </div>
+  <ul class="nav">
+    <li><a href="index.html">Launchpad</a></li>
+    <li><a href="invoices.html" class="active">The Vault</a></li>
+    <li><a href="#">Hive</a></li>
+    <li><a href="#">Pulse</a></li>
+    <li><a href="#">Toolbox</a></li>
+  </ul>
+  <div class="brand">Ledgerly</div>
+</div>
+
+<div class="layout">
+  <div class="sidebar">
+    <a href="#">All</a>
+    <a href="#">Drafts</a>
+    <a href="#">Sent</a>
+    <a href="#">Overdue</a>
+    <a href="#">Paid</a>
+    <a href="#">Recurring</a>
+  </div>
+
+  <div class="main">
+    <div class="crumbs">Launchpad / The Vault / Sent / INV-2041</div>
+
+    <div class="panel card-shadow-a">
+      <h2>DOCUMENT INFORMATION</h2>
+      <table class="kv">
+        <tr><td>Document ID:</td><td>INV-2041</td></tr>
+        <tr><td>Client Name:</td><td>Northwind Traders</td></tr>
+        <tr><td>Client Email:</td><td>ap@northwind.example</td></tr>
+        <tr><td>Client Phone:</td><td>(555) 765-4321</td></tr>
+        <tr><td>Amount:</td><td>$4,250.00</td></tr>
+        <tr><td>Status:</td><td>Overdue</td></tr>
+        <tr><td>Days Overdue:</td><td>12</td></tr>
+        <tr><td>Issued:</td><td>2026-08-01</td></tr>
+        <tr><td>Due:</td><td>2026-08-31</td></tr>
+      </table>
+      <div class="actions">
+        <button class="btn btn-blue">Send Reminder</button>
+        <button class="btn btn-green">Download PDF</button>
+        <button class="btn btn-orange">Duplicate</button>
+        <button class="btn btn-red">Delete</button>
+        <button class="btn btn-grey">Mark as paid</button>
+      </div>
+    </div>
+
+    <div class="panel card-shadow-b">
+      <h2>THIS MONTH</h2>
+      <div class="metric"><div>Collected</div><div class="num up">$18,400</div><div class="up">8%</div></div>
+      <div class="metric"><div>Outstanding</div><div class="num down">$9,120</div><div class="down">14%</div></div>
+      <div class="metric"><div>Avg. days to pay</div><div class="num down">23</div><div class="down">3</div></div>
+    </div>
+
+    <div class="panel">
+      <h2>ALL SENT DOCUMENTS</h2>
+      <table class="dense">
+        <tr><th>Number</th><th>Client</th><th>Issued</th><th>Due</th><th>Amount</th><th>Status</th><th></th></tr>
+        <tr><td>INV-2041</td><td>Northwind Traders</td><td>2026-08-01</td><td>2026-08-31</td><td>$4,250.00</td><td>Overdue</td><td><button class="quiet-danger">Archive</button></td></tr>
+        <tr><td>INV-2040</td><td>Blue Yonder Air</td><td>2026-08-01</td><td>2026-08-31</td><td>$980.50</td><td>Paid</td><td><button class="quiet-danger">Archive</button></td></tr>
+        <tr><td>INV-2039</td><td>Fabrikam Ltd</td><td>2026-07-28</td><td>2026-08-27</td><td>$12,004.00</td><td>Paid</td><td><button class="quiet-danger">Archive</button></td></tr>
+        <tr><td>INV-2038</td><td>Contoso Pharma</td><td>2026-07-25</td><td>2026-08-24</td><td>$310.00</td><td>Sent</td><td><button class="quiet-danger">Archive</button></td></tr>
+        <tr><td>INV-2037</td><td>Tailspin Toys</td><td>2026-07-21</td><td>2026-08-20</td><td>$77.25</td><td>Sent</td><td><button class="quiet-danger">Archive</button></td></tr>
+        <tr><td>INV-2036</td><td>Wingtip Design</td><td>2026-07-19</td><td>2026-08-18</td><td>$2,600.00</td><td>Paid</td><td><button class="quiet-danger">Archive</button></td></tr>
+      </table>
+    </div>
+
+    <div class="panel">
+      <h2>RECURRING</h2>
+      <div class="empty">No data.</div>
+      <div class="actions">
+        <select><option>Filter by client</option></select>
+        <select><option>Sort by next run</option></select>
+        <button class="btn btn-grey">Export</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="footer">Copyright 2026 Ledgerly Inc.</div>
+
+</body>
+</html>

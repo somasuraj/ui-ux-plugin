@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sign up - Ledgerly</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">
+      <a class="brand-name" href="index.html">Ledgerly</a>
+      <span class="tagline">Invoicing for small teams</span>
+    </div>
+    <nav class="utils" aria-label="Utilities">
+      <a href="index.html">Home</a>
+      <a href="#">Help</a>
+      <a href="#">Log in</a>
+    </nav>
+  </div>
+</header>
+
+<main class="formwrap" id="main">
+  <div class="formcard">
+    <h1>Create your free account</h1>
+    <p class="lede">All we need is your name, email and a password.</p>
+
+    <form action="#" method="post">
+      <div class="field">
+        <label for="name">Full name</label>
+        <input type="text" id="name" name="n" autocomplete="name" required aria-describedby="name-error">
+        <p class="field-error" id="name-error">Enter your name.</p>
+      </div>
+      <div class="field">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="e" autocomplete="email" required aria-describedby="email-error">
+        <p class="field-error" id="email-error">Enter an email address, like name@company.com.</p>
+      </div>
+      <div class="field">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="p" autocomplete="new-password" required aria-describedby="password-error">
+        <p class="field-error" id="password-error">Choose a password.</p>
+      </div>
+      <button type="submit" class="btn btn-lg btn-primary">Create account</button>
+    </form>
+
+    <div class="form-foot">
+      <p>Signing up is free. Prices exclude taxes and a 3.5% processing fee per payment.</p>
+      <p>Already have an account? <a href="#">Log in</a></p>
+    </div>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="wrap">
+    <p>Copyright 2026 Ledgerly Inc.</p>
+  </div>
+</footer>
+
+</body>
+</html>

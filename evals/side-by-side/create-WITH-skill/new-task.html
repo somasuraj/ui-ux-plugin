@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>New task - Tasklane</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+
+  <header class="app-header">
+    <div class="app-header__inner">
+      <a class="brand" href="tasks.html">
+        <svg class="brand__mark" viewBox="0 0 24 24" aria-hidden="true">
+          <rect width="24" height="24" rx="6" fill="hsl(213 82% 42%)"/>
+          <path d="M7 12.5l3.2 3.2L17 9" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Tasklane
+      </a>
+      <nav class="app-nav" aria-label="Main">
+        <a href="tasks.html">Team tasks</a>
+      </nav>
+      <div class="app-header__user">
+        <span class="avatar avatar--sm" aria-hidden="true">PN</span>
+        <span>Priya Nair</span>
+      </div>
+    </div>
+  </header>
+
+  <main id="main" class="page page--narrow">
+    <a class="back-link" href="tasks.html">&larr; Team tasks</a>
+    <div class="page-head">
+      <h1 class="page-title">New task</h1>
+    </div>
+
+    <form class="card form" id="task-form" action="tasks.html" method="get" novalidate>
+      <div class="field">
+        <label class="field__label" for="title">Title</label>
+        <input class="input" id="title" name="title" type="text" maxlength="120" autocomplete="off" required autofocus>
+        <p class="field__error" id="title-error" hidden>Enter a title so the team knows what the task is.</p>
+      </div>
+
+      <div class="field">
+        <label class="field__label" for="description">Description <span class="field__optional">(optional)</span></label>
+        <textarea class="input" id="description" name="description" rows="3"></textarea>
+      </div>
+
+      <div class="field">
+        <label class="field__label" for="assignee">Assignee</label>
+        <select class="input input--short" id="assignee" name="assignee">
+          <option value="">Unassigned</option>
+          <option value="PN" selected>Priya Nair (you)</option>
+          <option value="AB">Aisha Bello</option>
+          <option value="ES">Elena Sokolova</option>
+          <option value="MH">Marcus Hale</option>
+          <option value="TR">Tom&aacute;s Rivera</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label class="field__label" for="due">Due date <span class="field__optional">(optional)</span></label>
+        <input class="input input--short" id="due" name="due" type="date">
+      </div>
+
+      <fieldset class="field">
+        <legend class="field__label">Priority</legend>
+        <div class="segmented">
+          <label><input type="radio" name="priority" value="low"><span>Low</span></label>
+          <label><input type="radio" name="priority" value="medium" checked><span>Medium</span></label>
+          <label><input type="radio" name="priority" value="high"><span>High</span></label>
+        </div>
+      </fieldset>
+
+      <div class="form__actions">
+        <button class="btn btn--primary" type="submit">Create task</button>
+        <a class="btn btn--link" href="tasks.html">Cancel</a>
+      </div>
+    </form>
+  </main>
+
+  <script>
+    (function () {
+      var form = document.getElementById('task-form');
+      var title = document.getElementById('title');
+      var error = document.getElementById('title-error');
+
+      function check() {
+        var ok = title.value.trim() !== '';
+        error.hidden = ok;
+        if (ok) {
+          title.removeAttribute('aria-invalid');
+          title.removeAttribute('aria-describedby');
+        } else {
+          title.setAttribute('aria-invalid', 'true');
+          title.setAttribute('aria-describedby', 'title-error');
+        }
+        return ok;
+      }
+
+      form.addEventListener('submit', function (e) {
+        if (!check()) { e.preventDefault(); title.focus(); }
+      });
+      title.addEventListener('input', function () {
+        if (title.hasAttribute('aria-invalid')) check();
+      });
+
+      // Demo state: new-task.html?state=error
+      if (new URLSearchParams(location.search).get('state') === 'error') {
+        document.getElementById('description').value = 'Customers on the annual plan still see monthly prices.';
+        check();
+      }
+    })();
+  </script>
+</body>
+</html>

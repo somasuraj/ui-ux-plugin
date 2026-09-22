@@ -1,0 +1,6 @@
+__pycache__/
+*.pyc
+ui-shots/
+plugins/**/shots*/
+.DS_Store
+Thumbs.db

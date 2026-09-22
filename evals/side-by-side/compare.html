@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ui-ux skill: without vs with</title>
+<style>
+  :root { --ink:#0f1b2d; --muted:#4a5b70; --line:#dfe5ee; --page:#f6f8fb; --card:#fff; --blue:#1458b8; --no:#8a4b00; --no-bg:#fff3d6; --yes:#0d5c2f; --yes-bg:#dcf5e6; --bad:#8a1f1f; --bad-bg:#fde8e8; }
+  * { box-sizing: border-box; }
+  body { margin:0; font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; color:var(--ink); background:var(--page); }
+  header, main { max-width:1500px; margin:0 auto; padding:24px 32px; }
+  h1 { font-size:30px; line-height:1.2; margin:0 0 8px; }
+  h2 { font-size:24px; line-height:1.25; margin:64px 0 8px; }
+  h3 { font-size:18px; margin:32px 0 12px; }
+  p { max-width:75ch; margin:0 0 12px; color:var(--muted); }
+  p strong, li strong { color:var(--ink); }
+  .how { background:var(--card); border-radius:8px; padding:16px 24px; box-shadow:0 1px 3px rgba(0,0,0,.12); max-width:980px; }
+  .how li { margin-bottom:6px; color:var(--muted); }
+  .grid { display:grid; gap:16px; align-items:start; }
+  .g3 { grid-template-columns:repeat(3,minmax(0,1fr)); }
+  .g2 { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  figure { margin:0; background:var(--card); border-radius:8px; box-shadow:0 1px 3px rgba(0,0,0,.12); overflow:hidden; }
+  figcaption { display:flex; justify-content:space-between; align-items:baseline; gap:8px; padding:12px 16px; font-weight:700; }
+  figcaption a { font-weight:400; font-size:14px; color:var(--blue); }
+  .tag { font-size:12px; letter-spacing:.05em; text-transform:uppercase; padding:2px 8px; border-radius:999px; }
+  .t-orig { background:var(--bad-bg); color:var(--bad); } .t-no { background:var(--no-bg); color:var(--no); } .t-yes { background:var(--yes-bg); color:var(--yes); }
+  .shot { height:560px; overflow:auto; border-top:2px solid var(--line); background:#fff; }
+  .shot.mobile { height:520px; text-align:center; background:#e9edf3; }
+  .shot img { width:100%; display:block; }
+  .shot.mobile img { width:auto; max-width:100%; display:inline-block; }
+  table { border-collapse:collapse; width:100%; max-width:1100px; background:var(--card); border-radius:8px; overflow:hidden; box-shadow:0 1px 3px rgba(0,0,0,.12); font-size:15px; }
+  th, td { text-align:left; padding:10px 16px; border-bottom:2px solid #f0f3f8; vertical-align:top; }
+  th { font-size:12px; letter-spacing:.05em; text-transform:uppercase; color:var(--muted); background:#f9fbfd; }
+  td.n { font-variant-numeric:tabular-nums; }
+  .good { color:var(--yes); font-weight:700; } .warn { color:var(--bad); font-weight:700; }
+  .verdict { background:var(--card); border-left:4px solid var(--blue); border-radius:8px; padding:16px 24px; max-width:980px; box-shadow:0 1px 3px rgba(0,0,0,.12); }
+  .verdict p { color:var(--ink); }
+  @media (max-width:1000px){ .g3,.g2{grid-template-columns:1fr;} header,main{padding:16px;} }
+</style>
+</head>
+<body>
+<header>
+  <h1>Same job, same model, same prompt: without the skill vs with it</h1>
+  <p>Two jobs were each given to two fresh agents that had never seen this project. The only difference between each pair: one was told to use only its own knowledge, the other was told to use the <strong>ui-ux</strong> skill. Screenshots below are scrollable; "open live page" opens the real HTML.</p>
+  <div class="how">
+    <ul>
+      <li><strong>Job 1, refactor:</strong> "Improve the UI and UX of Ledgerly (a deliberately broken 3-page invoicing app). Make it look professional and easy to use."</li>
+      <li><strong>Job 2, create:</strong> "Build a Team tasks screen plus a New task form for a task tracker called Tasklane, from an empty folder."</li>
+      <li>The two skill runs were interrupted by a usage limit after writing their files and were resumed to finish the skill's verify step. The no-skill runs had already finished.</li>
+      <li>Numbers come from the same scripts run on every version (<code>scan.py</code>, <code>notes/fidelity.py</code>). One run each: treat small differences as noise.</li>
+    </ul>
+  </div>
+</header>
+
+<main>
+<h2>Job 1: fix the broken Ledgerly app</h2>
+
+<h3>Invoices screen</h3>
+<div class="grid g3">
+  <figure><figcaption><span>Original <span class="tag t-orig">broken on purpose</span></span><a href="original/invoices.html" target="_blank">open live page</a></figcaption><div class="shot"><img src="shots/original/invoices.png" alt="Original invoices screen"></div></figure>
+  <figure><figcaption><span>Refactor <span class="tag t-no">without skill</span></span><a href="refactor-WITHOUT-skill/invoices.html" target="_blank">open live page</a></figcaption><div class="shot"><img src="shots/refactor-WITHOUT-skill/invoices.png" alt="Invoices screen refactored without the skill"></div></figure>
+  <figure><figcaption><span>Refactor <span class="tag t-yes">with skill</span></span><a href="refactor-WITH-skill/invoices.html" target="_blank">open live page</a></figcaption><div class="shot"><img src="shots/refactor-WITH-skill/invoices.png" alt="Invoices screen refactored with the skill"></div></figure>
+</div>
+
+<h3>Landing page</h3>
+<div class="grid g3">
+  <figure><figcaption><span>Original <span class="tag t-orig">broken on purpose</span></span><a href="original/index.html" target="_blank">open live page</a></figcaption><div class="shot"><img src="shots/original/index.png" alt="Original landing page"></div></figure>
+  <figure><figcaption><span>Refactor <span class="tag t-no">without skill</span></span><a href="refactor-WITHOUT-skill/index.html" target="_blank">open live page</a></figcaption><div class="shot"><img src="shots/refactor-WITHOUT-skill/index.png" alt="Landing page refactored without the skill"></div></figure>
+  <figure><figcaption><span>Refactor <span class="tag t-yes">with skill</span></span><a href="refactor-WITH-skill/index.html" target="_blank">open live page</a></figcaption><div class="shot"><img src="shots/refactor-WITH-skill/index.png" alt="Landing page refactored with the skill"></div></figure>
+</div>
+
+<h3>Signup</h3>
+<div class="grid g3">
+  <figure><figcaption><span>Original <span class="tag t-orig">broken on purpose</span></span><a href="original/signup.html" target="_blank">open live page</a></figcaption><div class="shot"><img src="shots/original/signup.png" alt="Original signup form"></div></figure>
+  <figure><figcaption><span>Refactor <span class="tag t-no">without skill</span></span><a href="refactor-WITHOUT-skill/signup.html" target="_blank">open live page</a></figcaption><div class="shot"><img src="shots/refactor-WITHOUT-skill/signup.png" alt="Signup refactored without the skill"></div></figure>
+  <figure><figcaption><span>Refactor <span class="tag t-yes">with skill</span></span><a href="refactor-WITH-skill/signup.html" target="_blank">open live page</a></figcaption><div class="shot"><img src="shots/refactor-WITH-skill/signup.png" alt="Signup refactored with the skill"></div></figure>
+</div>
+
+<h3>Invoices at phone width (400px)</h3>
+<div class="grid g3">
+  <figure><figcaption><span>Original</span></figcaption><div class="shot mobile"><img src="shots/original/invoices-mobile.png" alt="Original invoices at 400px"></div></figure>
+  <figure><figcaption><span><span class="tag t-no">without skill</span></span></figcaption><div class="shot mobile"><img src="shots/refactor-WITHOUT-skill/invoices-mobile.png" alt="Without-skill invoices at 400px"></div></figure>
+  <figure><figcaption><span><span class="tag t-yes">with skill</span></span></figcaption><div class="shot mobile"><img src="shots/refactor-WITH-skill/invoices-mobile.png" alt="With-skill invoices at 400px"></div></figure>
+</div>
+
+<h3>Measured: did the redesign stay faithful to the real app?</h3>
+<table>
+  <tr><th>Check</th><th>Without skill</th><th>With skill</th></tr>
+  <tr><td>The app's own nav sections (Hive, Pulse, Toolbox)</td><td class="warn">All three deleted</td><td class="good">Kept, and flagged to the owner as unclear</td></tr>
+  <tr><td>Navigation / sections invented that the app does not have</td><td class="warn">Clients, Reports, Settings, Features, How it works, Pricing</td><td class="good">None</td></tr>
+  <tr><td>Invoice data</td><td class="warn">Due dates of INV-2038 and INV-2037 silently changed (Aug to Sep)</td><td class="good">Unchanged</td></tr>
+  <tr><td>Marketing claims added without a source</td><td class="warn">"No credit card required"</td><td class="warn">"No card needed" (listed as an assumption in its notes)</td></tr>
+  <tr><td>"New invoice" button (no such function exists)</td><td class="warn">Added</td><td class="warn">Added, as a stub, and reported as a gap. The skill says not to; it did anyway.</td></tr>
+  <tr><td>3.5% fee that was hidden in tiny footer text</td><td>Still disclosed</td><td>Moved next to the sign-up button, pricing block, and signup form</td></tr>
+  <tr><td>Looked at its own result before finishing</td><td class="warn">No ("not verified in a browser")</td><td class="good">Yes: desktop and 400px screenshots, fixed mobile table overflow and a clipped filter row</td></tr>
+  <tr><td>Open questions handed to the owner</td><td>None</td><td class="good">Unclear labels, metric colour meaning, stub button, assumptions</td></tr>
+</table>
+
+<h3>Measured: code health (same scanner on every version)</h3>
+<table>
+  <tr><th>Metric</th><th>Original</th><th>Without skill</th><th>With skill</th></tr>
+  <tr><td>Distinct font sizes</td><td class="n">14</td><td class="n">9</td><td class="n">8</td></tr>
+  <tr><td>Distinct colours</td><td class="n">22</td><td class="n">31</td><td class="n">21</td></tr>
+  <tr><td>Raw (non-token) spacing values</td><td class="n">18</td><td class="n">6</td><td class="n">0</td></tr>
+  <tr><td>Border declarations</td><td class="n">17</td><td class="n">20</td><td class="n">11</td></tr>
+  <tr><td>Design tokens defined</td><td class="n">0</td><td class="n">40</td><td class="n">34</td></tr>
+  <tr><td>Text contrast failures flagged</td><td class="n">10</td><td class="n">2</td><td class="n">0</td></tr>
+  <tr><td>Unlabeled form controls</td><td class="n">15</td><td class="n">0</td><td class="n">0</td></tr>
+  <tr><td>Pages missing landmarks</td><td class="n">3</td><td class="n">1</td><td class="n">0</td></tr>
+  <tr><td>Candidate issue types left</td><td class="n">20</td><td class="n">3</td><td class="n">1</td></tr>
+</table>
+
+<h2>Job 2: build Tasklane from nothing</h2>
+
+<h3>Team tasks</h3>
+<div class="grid g2">
+  <figure><figcaption><span>Created <span class="tag t-no">without skill</span></span><a href="create-WITHOUT-skill/tasks.html" target="_blank">open live page</a></figcaption><div class="shot"><img src="shots/create-WITHOUT-skill/tasks.png" alt="Team tasks built without the skill"></div></figure>
+  <figure><figcaption><span>Created <span class="tag t-yes">with skill</span></span><a href="create-WITH-skill/tasks.html" target="_blank">open live page</a></figcaption><div class="shot"><img src="shots/create-WITH-skill/tasks.png" alt="Team tasks built with the skill"></div></figure>
+</div>
+
+<h3>New task form</h3>
+<div class="grid g2">
+  <figure><figcaption><span>Created <span class="tag t-no">without skill</span></span><a href="create-WITHOUT-skill/new-task.html" target="_blank">open live page</a></figcaption><div class="shot"><img src="shots/create-WITHOUT-skill/new-task.png" alt="New task form built without the skill"></div></figure>
+  <figure><figcaption><span>Created <span class="tag t-yes">with skill</span></span><a href="create-WITH-skill/new-task.html" target="_blank">open live page</a></figcaption><div class="shot"><img src="shots/create-WITH-skill/new-task.png" alt="New task form built with the skill"></div></figure>
+</div>
+
+<h3>Phone width (400px)</h3>
+<div class="grid g2">
+  <figure><figcaption><span><span class="tag t-no">without skill</span></span></figcaption><div class="shot mobile"><img src="shots/create-WITHOUT-skill/tasks-mobile.png" alt="Without-skill tasks at 400px"></div></figure>
+  <figure><figcaption><span><span class="tag t-yes">with skill</span></span></figcaption><div class="shot mobile"><img src="shots/create-WITH-skill/tasks-mobile.png" alt="With-skill tasks at 400px"></div></figure>
+</div>
+
+<h3>Measured</h3>
+<table>
+  <tr><th>Metric</th><th>Without skill</th><th>With skill</th></tr>
+  <tr><td>Distinct font sizes</td><td class="n">8</td><td class="n">5</td></tr>
+  <tr><td>Raw (non-token) spacing values</td><td class="n">6</td><td class="n">2</td></tr>
+  <tr><td>Border declarations</td><td class="n">15</td><td class="n">9</td></tr>
+  <tr><td>Design tokens defined</td><td class="n">36</td><td class="n">54</td></tr>
+  <tr><td>States reachable by URL (empty, error, created)</td><td>Empty state via filter only</td><td>?state=empty, ?state=error, created-task banner</td></tr>
+  <tr><td>Looked at its own result before finishing</td><td class="warn">No</td><td class="good">Yes: found and fixed 2 rendering bugs and a 4.2:1 contrast pair</td></tr>
+  <tr><td>Scanner candidates left</td><td class="n">3 types</td><td class="n">3 types (same ones, each explained in its notes)</td></tr>
+</table>
+
+<h2>What this shows, honestly</h2>
+<div class="verdict">
+  <p><strong>Both versions look professional.</strong> A strong model already designs well on its own. On the from-scratch job the two results are close, and the no-skill one is arguably richer (summary cards, search, relative due dates). If you only judge by a glance, the skill does not buy a dramatic visual difference.</p>
+  <p><strong>The real difference is in redesigning an existing app.</strong> Without the skill the agent built a nicer app than the one it was given: it deleted the product's real navigation, invented six sections, and quietly changed invoice data. With the skill it improved the same app: real nav kept and flagged, data untouched, the hidden fee surfaced, and a list of questions for the owner.</p>
+  <p><strong>With the skill the agent checks its own work.</strong> Neither no-skill run ever rendered its pages. Both skill runs took screenshots at desktop and phone width, looked at them, and fixed layout and contrast bugs before finishing. The cleaner code-health numbers follow from that.</p>
+  <p><strong>The skill is not perfectly obeyed.</strong> It says not to add placeholder features or unsourced claims; the skill run still added a "New invoice" stub and "No card needed", though it reported both. One run per cell; small number differences are noise.</p>
+</div>
+<p style="margin-top:32px">Notes written by each agent are in <code>notes/</code>; raw scanner output in <code>notes/scan-*.txt</code>.</p>
+</main>
+</body>
+</html>

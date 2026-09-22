@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Create your free account - Ledgerly</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="auth">
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="container">
+    <a class="brand" href="index.html">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 3v10h8"/><path d="M8 6h4M8 9h2"/></svg>
+      </span>
+      Ledgerly
+    </a>
+    <div class="header-actions">
+      <span class="header-note">Already have an account?</span>
+      <a class="btn btn-secondary" href="invoices.html">Log in</a>
+    </div>
+  </div>
+</header>
+
+<main id="main" class="auth-main">
+  <div class="auth-card">
+    <h1>Create your free account</h1>
+    <p class="sub">Start sending invoices in about a minute. No credit card required.</p>
+
+    <form action="#" method="post">
+      <div class="field">
+        <label for="name">Full name</label>
+        <input id="name" name="name" type="text" autocomplete="name" required>
+        <p class="field-error">Enter your name.</p>
+      </div>
+
+      <div class="field">
+        <label for="email">Work email</label>
+        <input id="email" name="email" type="email" autocomplete="email" inputmode="email" placeholder="you@company.com" required aria-describedby="email-hint">
+        <p class="hint" id="email-hint">We'll send invoices and payment notices from this address.</p>
+        <p class="field-error">Enter a valid email address, like you@company.com.</p>
+      </div>
+
+      <div class="field">
+        <label for="password">Password</label>
+        <input id="password" name="password" type="password" autocomplete="new-password" minlength="8" required aria-describedby="password-hint">
+        <p class="hint" id="password-hint">At least 8 characters.</p>
+        <p class="field-error">Use at least 8 characters.</p>
+      </div>
+
+      <button type="submit" class="btn btn-lg btn-primary btn-block">Create free account</button>
+
+      <p class="form-foot">By creating an account you agree to our <a href="#">Terms</a> and <a href="#">Privacy Policy</a>.</p>
+    </form>
+  </div>
+
+  <p class="auth-alt">Just looking? <a href="invoices.html">See a sample dashboard</a></p>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <span>&copy; 2026 Ledgerly Inc.</span>
+    <ul class="footer-links">
+      <li><a href="#">Help</a></li>
+      <li><a href="#">Privacy</a></li>
+      <li><a href="#">Terms</a></li>
+    </ul>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Invoices - Ledgerly</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="app">
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="container">
+    <a class="brand" href="index.html">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 3v10h8"/><path d="M8 6h4M8 9h2"/></svg>
+      </span>
+      Ledgerly
+    </a>
+    <nav aria-label="Main">
+      <ul class="main-nav">
+        <li><a href="invoices.html" aria-current="page">Invoices</a></li>
+        <li><a href="#">Clients</a></li>
+        <li><a href="#">Reports</a></li>
+        <li><a href="#">Settings</a></li>
+      </ul>
+    </nav>
+    <div class="header-actions">
+      <a class="header-link" href="#">Help</a>
+      <a class="header-link" href="#">Account</a>
+      <a class="header-link" href="index.html">Log out</a>
+    </div>
+  </div>
+</header>
+
+<main id="main" class="page">
+  <div class="container">
+
+    <div class="page-head">
+      <div>
+        <h1>Invoices</h1>
+        <p>Track what you've sent, what's late, and what's been paid.</p>
+      </div>
+      <a class="btn btn-primary" href="#">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M7 2v10M2 7h10"/></svg>
+        New invoice
+      </a>
+    </div>
+
+    <section class="alert" aria-label="Overdue invoices">
+      <div>
+        <p class="alert-title">1 invoice is overdue - $4,250.00</p>
+        <p class="alert-text">INV-2041 for Northwind Traders was due Aug 31 and is 12 days late.</p>
+      </div>
+      <div class="alert-actions">
+        <a class="btn btn-secondary" href="#inv-2041">Review invoice</a>
+      </div>
+    </section>
+
+    <section aria-labelledby="month-h">
+      <h2 id="month-h" class="visually-hidden">This month</h2>
+      <div class="metrics">
+        <div class="metric">
+          <div class="metric-label">Collected this month</div>
+          <div class="metric-value">$18,400</div>
+          <div class="trend trend-good">&uarr; 8% <span>vs. last month</span></div>
+        </div>
+        <div class="metric">
+          <div class="metric-label">Outstanding</div>
+          <div class="metric-value">$9,120</div>
+          <div class="trend trend-good">&darr; 14% <span>vs. last month</span></div>
+        </div>
+        <div class="metric">
+          <div class="metric-label">Average days to pay</div>
+          <div class="metric-value">23</div>
+          <div class="trend trend-good">&darr; 3 days <span>vs. last month</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="card" aria-labelledby="list-h">
+      <h2 id="list-h" class="visually-hidden">Invoice list</h2>
+      <nav aria-label="Filter invoices by status">
+        <ul class="tabs">
+          <li><a href="#" aria-current="true">All <span class="count">6</span></a></li>
+          <li><a href="#">Overdue <span class="count count-danger">1</span></a></li>
+          <li><a href="#">Sent <span class="count">2</span></a></li>
+          <li><a href="#">Paid <span class="count">3</span></a></li>
+          <li><a href="#">Drafts <span class="count">0</span></a></li>
+          <li><a href="#recurring">Recurring <span class="count">0</span></a></li>
+        </ul>
+      </nav>
+      <div class="table-wrap">
+        <table class="data">
+          <thead>
+            <tr>
+              <th scope="col">Invoice</th>
+              <th scope="col">Client</th>
+              <th scope="col">Issued</th>
+              <th scope="col">Due</th>
+              <th scope="col" class="num">Amount</th>
+              <th scope="col">Status</th>
+              <th scope="col"><span class="visually-hidden">Actions</span></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="is-selected">
+              <td><a class="row-action" href="#inv-2041">INV-2041</a></td>
+              <td class="client">Northwind Traders</td>
+              <td class="muted">Aug 1, 2026</td>
+              <td class="late">Aug 31, 2026</td>
+              <td class="num">$4,250.00</td>
+              <td><span class="badge badge-overdue">Overdue 12 days</span></td>
+              <td><a class="row-action" href="#inv-2041">View</a></td>
+            </tr>
+            <tr>
+              <td><a class="row-action" href="#">INV-2040</a></td>
+              <td class="client">Blue Yonder Air</td>
+              <td class="muted">Aug 1, 2026</td>
+              <td class="muted">Aug 31, 2026</td>
+              <td class="num">$980.50</td>
+              <td><span class="badge badge-paid">Paid</span></td>
+              <td><a class="row-action" href="#">View</a></td>
+            </tr>
+            <tr>
+              <td><a class="row-action" href="#">INV-2039</a></td>
+              <td class="client">Fabrikam Ltd</td>
+              <td class="muted">Jul 28, 2026</td>
+              <td class="muted">Aug 27, 2026</td>
+              <td class="num">$12,004.00</td>
+              <td><span class="badge badge-paid">Paid</span></td>
+              <td><a class="row-action" href="#">View</a></td>
+            </tr>
+            <tr>
+              <td><a class="row-action" href="#">INV-2038</a></td>
+              <td class="client">Contoso Pharma</td>
+              <td class="muted">Jul 25, 2026</td>
+              <td class="muted">Sep 24, 2026</td>
+              <td class="num">$310.00</td>
+              <td><span class="badge badge-sent">Sent</span></td>
+              <td><a class="row-action" href="#">View</a></td>
+            </tr>
+            <tr>
+              <td><a class="row-action" href="#">INV-2037</a></td>
+              <td class="client">Tailspin Toys</td>
+              <td class="muted">Jul 21, 2026</td>
+              <td class="muted">Sep 20, 2026</td>
+              <td class="num">$77.25</td>
+              <td><span class="badge badge-sent">Sent</span></td>
+              <td><a class="row-action" href="#">View</a></td>
+            </tr>
+            <tr>
+              <td><a class="row-action" href="#">INV-2036</a></td>
+              <td class="client">Wingtip Design</td>
+              <td class="muted">Jul 19, 2026</td>
+              <td class="muted">Aug 18, 2026</td>
+              <td class="num">$2,600.00</td>
+              <td><span class="badge badge-paid">Paid</span></td>
+              <td><a class="row-action" href="#">View</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="card" id="inv-2041" aria-labelledby="detail-h">
+      <div class="card-head">
+        <div class="detail-head">
+          <h2 id="detail-h">Invoice INV-2041</h2>
+          <span class="badge badge-overdue">Overdue 12 days</span>
+        </div>
+      </div>
+      <div class="card-body">
+        <dl class="detail-grid">
+          <div>
+            <dt>Amount due</dt>
+            <dd class="big">$4,250.00</dd>
+          </div>
+          <div>
+            <dt>Client</dt>
+            <dd>Northwind Traders
+              <small><a href="mailto:ap@northwind.example">ap@northwind.example</a></small>
+              <small><a href="tel:+15557654321">(555) 765-4321</a></small>
+            </dd>
+          </div>
+          <div>
+            <dt>Issued</dt>
+            <dd>Aug 1, 2026</dd>
+          </div>
+          <div>
+            <dt>Due</dt>
+            <dd>Aug 31, 2026 <small>12 days ago</small></dd>
+          </div>
+        </dl>
+        <div class="action-bar">
+          <button type="button" class="btn btn-primary">Send reminder</button>
+          <button type="button" class="btn btn-secondary">Mark as paid</button>
+          <button type="button" class="btn btn-ghost">Download PDF</button>
+          <button type="button" class="btn btn-ghost">Duplicate</button>
+          <button type="button" class="btn btn-danger-quiet push">Delete invoice</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="card" id="recurring" aria-labelledby="rec-h">
+      <div class="card-head">
+        <h2 id="rec-h">Recurring invoices</h2>
+      </div>
+      <div class="empty-state">
+        <div class="feature-icon" aria-hidden="true">
+          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8a6 6 0 0 1 10.5-3L16 6.5"/><path d="M16 3v3.5h-3.5"/><path d="M16 12a6 6 0 0 1-10.5 3L4 13.5"/><path d="M4 17v-3.5h3.5"/></svg>
+        </div>
+        <h3>No recurring invoices yet</h3>
+        <p>Bill the same client on a schedule. Set it up once and Ledgerly sends the invoice for you every week, month, or quarter.</p>
+        <a class="btn btn-secondary" href="#">Set up a recurring invoice</a>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <span>&copy; 2026 Ledgerly Inc.</span>
+    <ul class="footer-links">
+      <li><a href="#">Help</a></li>
+      <li><a href="#">Privacy</a></li>
+      <li><a href="#">Terms</a></li>
+    </ul>
+  </div>
+</footer>
+
+</body>
+</html>

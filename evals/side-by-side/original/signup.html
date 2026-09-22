@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ledgerly</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="topbar">
+  <div class="utils">
+    <a href="#">Help</a>
+    <a href="#">FAQ</a>
+    <a href="#">Blog</a>
+    <a href="#">Careers</a>
+    <a href="#">Press</a>
+    <a href="#">Partners</a>
+    <a href="#">Investors</a>
+    <a href="#">Log in</a>
+  </div>
+  <ul class="nav">
+    <li><a href="index.html">Launchpad</a></li>
+    <li><a href="invoices.html">The Vault</a></li>
+    <li><a href="#">Hive</a></li>
+    <li><a href="#">Pulse</a></li>
+    <li><a href="#">Toolbox</a></li>
+  </ul>
+  <div class="brand">Ledgerly</div>
+</div>
+
+<div class="formwrap">
+  <h1>Become a Ledgerly Insider</h1>
+
+  <div class="help">
+    <p>The following form is designed to collect the information that we need in order to create your account and to help us serve you better. Please fill in each of the text fields below by clicking on the field and typing your answer. Use the drop-down menu to select your occupation. When you have completed all of the fields, click the button at the bottom of the form to submit it. <span class="tiny">Fields cannot be left blank. If you have questions that require a response, do not use this form.</span></p>
+  </div>
+
+  <form action="#" method="post">
+    <div class="field"><span class="lbl">Full name</span><input type="text" name="n"></div>
+    <div class="field"><input type="text" name="e" placeholder="Email"></div>
+    <div class="field"><input type="password" name="p" placeholder="Password"></div>
+    <div class="field"><input type="text" name="ph" placeholder="Phone (format: 5557654321, digits only)" pattern="[0-9]{10}" required></div>
+    <div class="field"><input type="text" name="a1" placeholder="Street address" required></div>
+    <div class="field"><input type="text" name="a2" placeholder="City" required></div>
+    <div class="field"><input type="text" name="zip" placeholder="ZIP" required></div>
+    <div class="field"><input type="text" name="dob" placeholder="Date of birth (MM/DD/YYYY exactly)" required></div>
+    <div class="field">
+      <select name="occ" required>
+        <option>Occupation</option>
+        <option>Accountant</option>
+        <option>Owner</option>
+        <option>Other</option>
+      </select>
+    </div>
+    <div class="field"><input type="text" name="rev" placeholder="Annual household income" required></div>
+    <div class="field"><input type="text" name="cc" placeholder="Card number (no spaces or dashes)" pattern="[0-9]{16}" required></div>
+    <div class="err">Error: invalid input.</div>
+
+    <div class="avatar-row">
+      <img src="people/a.jpg">
+      <img src="people/b.jpg">
+      <img src="people/c.jpg">
+    </div>
+
+    <div class="actions">
+      <button type="reset" class="btn btn-blue">Clear form</button>
+      <button type="submit" class="btn btn-blue">Submit</button>
+      <a class="quiet-danger" href="#">Cancel my subscription</a>
+    </div>
+    <p>Your privacy is very important to us.</p>
+  </form>
+</div>
+
+<div class="footer">Copyright 2026 Ledgerly Inc.</div>
+
+</body>
+</html>
