@@ -23,7 +23,7 @@ From a local clone instead of GitHub:
 
 Try it for one session without installing: `claude --plugin-dir /path/to/ui-ux-plugin/plugins/ui-ux`
 
-Requirements: Python 3.8+ on PATH (`python` or `python3`; standard library only). Chrome, Edge, or Chromium for screenshots (optional but strongly recommended). Claude will ask permission the first time it runs the bundled scripts.
+Requirements: Python 3.8+ on PATH (`python` or `python3`; standard library only). Chrome, Edge, or Chromium for screenshots (optional but strongly recommended). The design skill pre-approves only its own bundled scripts (`allowed-tools`), so they run without a permission prompt; every other command still asks. The grant lasts for the turn that invokes the skill; the `ui-ux-designer` agent (which preloads the skill instead of invoking it) may still ask, so add an allow rule for the scripts in your settings if you use the agent unattended.
 
 ## Use
 
@@ -77,7 +77,7 @@ Blind tests: fresh agents that never saw the answer keys, graded by a separate n
 
 ## Develop
 
-The working copy of the skill lives in `~/.claude/skills/ui-ux`. `python build_plugin.py` regenerates `plugins/ui-ux/` from it (renames the skill, makes paths portable, generates the entry-point skills and manifests). Then:
+Edit `plugins/ui-ux/` directly; it is the source of truth. `python build_plugin.py` writes the version and descriptions into both manifests and checks that no machine-specific paths ship. Then:
 
 ```
 claude plugin validate . --strict

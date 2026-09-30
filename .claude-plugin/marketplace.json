@@ -10,7 +10,7 @@
       "name": "ui-ux",
       "source": "./plugins/ui-ux",
       "description": "Create, refactor, and audit app UI/UX with principles from Refactoring UI and Don't Make Me Think: a design skill with checklists, tokens and recipes, scanner / screenshot / contrast / report and refactor-fidelity scripts, five commands, and a ui-ux-designer agent.",
-      "version": "1.0.0",
+      "version": "1.1.0",
       "category": "design",
       "keywords": [
         "ui",

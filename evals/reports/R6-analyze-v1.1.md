@@ -1,0 +1,99 @@
+# UI/UX audit: Ledgerly (invoicing app), whole app
+
+**Size:** Full (whole app, 3 screens, shareable audit).
+**Screens reviewed:** index.html (landing, "Launchpad"), invoices.html (invoice list and detail, "The Vault"), signup.html (account creation, "Join")   **Evidence:** code read in full / scan.py / screenshots at 1280px and 400px / contrast.py on every non-trivial pair
+**Assumed top user tasks:** 1) A newcomer understands what Ledgerly is and creates an account. 2) A returning user finds an overdue invoice and chases it (send reminder). 3) A returning user records a payment (mark an invoice as paid).
+
+**Assumptions (no one to ask):** the screens are a static prototype of a product that will ship with this markup and CSS; `href="#"` stubs (44 in total), the missing `icons/` and `people/` image files, and the `.example` email are fixture artifacts and are not reported as design problems. "Hive", "Pulse" and "Toolbox" have no target screen, so their meaning cannot be inferred; they are flagged as naming problems, not removed. Payments are processed through Ledgerly (the footer mentions a per-payment fee).
+
+## Verdict
+Beyond tweaking on the landing and signup screens, fixable on the invoice screen. The biggest problem is trust and task completion at the two ends of the funnel: the landing page never says what Ledgerly is or where to start (five competing solid buttons, happy talk, eight shouting promos), and the "free" signup form demands date of birth, household income and a full card number through unlabeled, placeholder-only inputs while the 3.5% payment fee sits in 1.92:1 footer text. On the invoice screen the one routine money action, "Mark as paid", looks disabled (1.68:1) while "DELETE" is the loudest element. The biggest strength is the real content: the invoice data, the Sent table, and the three feature bullets are specific and useful once found.
+
+## Top fixes
+1. Cut the signup form to name, email, password; drop DOB, income, address, occupation, phone and card; give every control a visible `<label for>`; remove the reset button and the always-on error; rename Submit to "Create account" - removes a harmful data grab and a screen-reader barrier on the top conversion task - effort S - #43, #44, #45, #46, #47, #48, #51.
+2. Rebuild the invoice action row as a pyramid: "Send reminder" solid primary, "Mark as paid" secondary with passing contrast, Download/Duplicate as outline or link, Delete as quiet red text set apart with a confirm step - unblocks recording payments and stops accidental deletes - effort S - #31, #32.
+3. Replace the landing hero with a 6-to-8-word tagline beside the logo, a two-line blurb, one solid "Create free account" and a plain "Log in"; drop the self-classification chooser and most promos; make "Create your free account" a real link - newcomers get what/why/where-to-start - effort M - #18, #19, #20, #21, #26, #27, #29.
+4. Put pricing and the 3.5% per-payment fee in readable text next to the signup call to action and on the form - fees must be seen before people invest steps - effort S - #24.
+5. Rename navigation to plain words (Home, Invoices, ...), move the linked logo top-left, mark the current item with two cues, and give each screen an `<h1>` and `<title>` matching the clicked label - wayfinding on every screen - effort S - #1, #2, #3, #4, #30, #36.
+6. Introduce a small token set (greys, one primary, semantic shades with passing contrast, spacing and type scales), add `:focus-visible` styles and a 400px layout - fixes the systemic contrast, focus and mobile failures at once - effort M - #6, #9, #12, #13, #16.
+
+## Coverage
+| Screen | A | B | C | D | E | F | G | H |
+|--------|---|---|---|---|---|---|---|---|
+| Global | 1 | 4 | - | 2 | 3 | 5 | - | 2 |
+| index | 4 | 1 | 1 | ok | 1 | 1 | 2 | 2 |
+| invoices | ok | 2 | 5 | 1 | ok | 3 | ok | 1 |
+| signup | ok | 1 | 1 | 1 | ok | ok | 4 | 3 |
+
+## Findings
+| # | Sev | Screen | Area | Finding | Evidence | Rule | Fix |
+|---|-----|--------|------|---------|----------|------|-----|
+| 1 | Major | Global | A | Section names are internal or cute: "Launchpad", "The Vault", "Hive", "Pulse", "Toolbox"; nobody can tell that The Vault holds invoices, and Hive/Pulse/Toolbox have no target to explain them | `index.html:24-28`, `invoices.html:18-22`, `signup.html:23-27` | UR2, UR4 | Plain names (Home, Invoices, ...); owner to confirm what Hive, Pulse and Toolbox are before renaming |
+| 2 | Major | Global | B | Identity is pushed to the top-right by `order:3`, is not a link, and there is no Home item; the brand reads as an afterthought | `styles.css:26`, `index.html:41`, `invoices.html:24`, `signup.html:29` | UR6.1 | Brand mark top-left, linked to home; explicit Home in nav |
+| 3 | Major | Global | B | "You are here" in the top nav is only a colour shift from #555 to #4d4d4d (1.13:1), invisible in the screenshots | `styles.css:24-25` | UR6.4 | Two cues: dark colour plus weight 600 and an underline bar |
+| 4 | Major | Global | B | Screen names do not match what was clicked: "Join" opens "Become a Ledgerly Insider" titled "Ledgerly"; "The Vault" opens "Billing Documents Manager"; index and signup share the `<title>` "Ledgerly" | `index.html:6`, `index.html:20`, `signup.html:6`, `signup.html:33`, `invoices.html:6` | UR6.3 | Same words in link, `<title>` and `<h1>` per screen |
+| 5 | Minor | Global | B | Utilities outnumber and outshout sections: 9 bold link-blue utilities on index (8 on signup) vs quiet grey sections, and the set changes between screens (3 on invoices) | `index.html:12-21`, `signup.html:12-21`, `invoices.html:12-16`, `styles.css:28` | UR6.1 | 4 to 5 utilities (Help, Log in/Account), quieter than sections; park Careers/Press/Investors in the footer |
+| 6 | Major | Global | D | No media queries: at 400px the top nav collides with utilities, the CTA row and chooser run off-screen, and the invoices table is cut off behind a 25% sidebar | `styles.css:23`, `styles.css:43`, `styles.css:71`, `styles.css:83-86` | VR2.6, VR2.7 | Design the 400px layout: wrap/stack rows, collapse sidebar, horizontal-scroll or stacked table |
+| 7 | Minor | Global | D | Spacing has no scale: 18 distinct values including 3, 6, 7, 9, 13, 22, 26px and em padding on buttons | `styles.css:20`, `styles.css:37`, `styles.css:41`, `styles.css:48`, `styles.css:59` | VR2.3, VR2.8 | Adopt 4/8/12/16/24/32 and px padding per button size |
+| 8 | Major | Global | E | Body text is weight 300, line-height 1.2 and pure black: thin, cramped and harsh across every screen | `styles.css:7-10`, `styles.css:94` | VR1.3, VR3.5, VR4.1 | Weight 400, line-height 1.5, near-black grey (#1f2937) |
+| 9 | Minor | Global | E | Type scale is 14 sizes with near neighbours 11/12/13/14/15/16/17/18 and nested em (0.875em inside 0.875em = 11.5px) | `styles.css:45`, `styles.css:115-117` | VR3.1 | Hand-picked px scale 12/14/16/18/20/24/30 |
+| 10 | Minor | Global | E | All-caps text without letter-spacing: promo headings, table headers, the DELETE button | `styles.css:59`, `styles.css:65`, `styles.css:103` | VR3.8 | Add ~0.05em tracking, or use sentence case |
+| 11 | Major | Global | F | No palette or tokens: 22 colours, 15 unrelated greys, pure black, 0 custom properties; semantic red/green/orange used as decoration | `styles.css:8`, `styles.css:56-60`, `styles.css:65-66` | VR4.1 | Define grey, primary and semantic shade scales as CSS variables and use only those |
+| 12 | Major | Global | F | Solid button labels fail contrast: white on green 3.28:1, white on orange 2.77:1 | `styles.css:57-58` | VR4.5 | Darker fills (green ~#15803d, orange ~#c2410c) or dark text on tint |
+| 13 | Minor | Global | F | Heavy #999 borders on every panel, table cell, promo and metric; input borders at 2.85:1 miss the 3:1 control-boundary threshold | `styles.css:64`, `styles.css:90`, `styles.css:94`, `styles.css:102`, `styles.css:120` | VR7.1, UR10.6 | Separate with spacing and background; keep a light row divider; darken input borders to ~#8a8a8a |
+| 14 | Minor | Global | F | Three button shapes: square grey, 4px blue, 18px pill orange | `styles.css:49`, `styles.css:58`, `styles.css:60` | VR7.7 | One radius family, one button shape |
+| 15 | Minor | Global | F | Footer text #bbb at 11px is 1.92:1 on white | `styles.css:124` | VR4.5 | Grey at 4.5:1 or darker, 12px minimum |
+| 16 | Major | Global | H | No `:focus`, `:hover`, `:active` or `:disabled` rules anywhere; keyboard users get only browser defaults and buttons give no feedback | `styles.css:45-55` | UR10.6, VR7.5 | Add `:focus-visible` ring and hover/active states to links, buttons, inputs |
+| 17 | Major | Global | H | No landmarks (`header`, `nav`, `main`, `footer`) and no skip link on any screen | `index.html:11`, `invoices.html:11`, `signup.html:11` | UR10.5 | Wrap regions in landmarks; add a skip-to-content link |
+| 18 | Major | index | A | First screen does not answer what this is or where to start: "Welcome to Ledgerly!", motto "Work. Smarter.", a buzzword paragraph; no tagline beside the logo; no plainly named new-user or returning-user entry ("Let's Go!", "Learn More") | `index.html:45-53` | UR7, UR5 | Tagline like "Send invoices and get paid faster" by the logo; two-line blurb; "Create free account" + "Log in" |
+| 19 | Major | index | A | "Which one are you?" Personal / Business / Professional forces self-classification with overlapping categories before anything is explained | `index.html:57-61` | UR2, UR4 | Remove; tailor later or show plans on the pricing page |
+| 20 | Major | index | A | Promo overload: 8 red uppercase promos (hiring, partner spotlight, webinar, award) with 18 exclamation marks swamp the main point; orange emphasis text 2.77:1 | `index.html:64-73`, `styles.css:65-66` | UR7, UR3.5 | Keep at most one relevant promo below the fold; drop the shouting |
+| 21 | Major | index | A | Clickability inverted: "Send invoices in seconds" is blue and underlined but static, while the real signup link "Create your free account" is plain black text | `index.html:82`, `index.html:88`, `styles.css:79-80` | UR2 | Style the heading as a heading; make the signup call to action a real button |
+| 22 | Minor | index | B | Quick Find: scope pulldown before typing, no "Search" label, a hint set as the real value ("Type a keyword here..."), blank go button, unlabeled controls | `index.html:30-39` | UR6.1 | One box labelled "Search" with a "Search" button; placeholder not value; scope on results |
+| 23 | Major | index | C | Five solid, differently coloured hero buttons compete; there is no primary action | `index.html:49-53` | VR1.9 | One solid primary; the rest links or removed |
+| 24 | Major | index | G | The 3.5% per-payment processing fee and "prices exclude taxes" appear only in the 11px, 1.92:1 footer; pricing is behind a button | `index.html:91` | UR8 | State plan price and the 3.5% fee in body text next to the signup call to action |
+| 25 | Minor | index | G | Happy talk: "About this section" is a 114-word paragraph that says nothing actionable | `index.html:75-77` | UR5 | Delete, or replace with the three feature bullets |
+| 26 | Major | index | H | The search button and the "Create your free account" call to action are `<span onclick>`: not focusable or keyboard operable | `index.html:39`, `index.html:88` | UR10.5 | Use `<button>` and `<a href>` |
+| 27 | Minor | index | H | Feature icon has no alt and is a 16px icon scaled to 96px; heading jumps from h1 to h3 | `index.html:81`, `index.html:65` | UR10.5, VR6.3 | `alt=""`, a large-format icon, h2 for promo headings |
+| 28 | Minor | index | E | Centered hero and About paragraphs run about 180-200 characters per line at 1280px | `styles.css:42`, `styles.css:68` | VR3.3, VR3.7 | Left-align long text; max-width ~65ch |
+| 29 | Major | index | F | Grey and translucent text on the blue hero: motto #9a9a9a is 2.30:1, the blurb rgba(255,255,255,.45) at 13px is 2.55:1, so the only explanation of the product is barely readable | `styles.css:41-42` | VR1.5, VR4.5 | Opaque light tint of the hero blue (e.g. #dbe6ff) at 16px+ |
+| 30 | Major | invoices | B | No screen name (0 `<h1>`); a bold 16px breadcrumb with "/" separators and no links stands in for it | `invoices.html:38`, `styles.css:88` | UR6.3, UR6.5 | Add an `<h1>` (e.g. "INV-2041, Northwind Traders"); small linked breadcrumb with ">" above it |
+| 31 | Critical | invoices | C | Blocks: recording a payment. "Mark as paid" is #9b9b9b on #c9c9c9 (1.68:1) and looks disabled, so users conclude they cannot mark the invoice paid | `invoices.html:58`, `styles.css:60` | VR1.9, VR4.5 | Secondary style with passing contrast, placed next to Send reminder |
+| 32 | Major | invoices | C | Delete is the biggest, loudest control (18px uppercase solid red) right beside routine actions, with no confirm step; six solid buttons on the screen | `invoices.html:53-58`, `invoices.html:88`, `styles.css:59` | VR1.9 | Quiet red text set apart; confirmation dialog carries the solid red |
+| 33 | Major | invoices | C | Document info is a label:value wall; amount, overdue status and days overdue do not lead | `invoices.html:42-52` | VR1.6 | Lead with "$4,250.00, 12 days overdue" as a status pill; drop obvious labels (email, phone) |
+| 34 | Minor | invoices | C | Table rows have no primary datum (every cell same size and weight), amounts are left-aligned, status is plain text | `invoices.html:71-79`, `styles.css:102` | VR1.6, VR3.7 | Bold client/amount, right-align amount column and header, tinted status pills with words |
+| 35 | Minor | invoices | C | Section titles are 22px all-caps with rules and outweigh the content they label | `invoices.html:41`, `invoices.html:63`, `styles.css:91` | VR1.7 | 14-16px sentence-case labels |
+| 36 | Major | invoices | B | Sidebar has no current item (Sent is not marked) while the breadcrumb says Sent; the screen mixes one invoice's detail with a list, a month summary and Recurring | `invoices.html:28-35` | UR6.4 | Mark the active filter with two cues; split detail and list into separate screens |
+| 37 | Minor | invoices | D | Sidebar is 25% of the viewport: ~320px of empty tint at desktop, too narrow at 400px | `styles.css:84` | VR2.7 | Fixed width (~200px); collapse on small screens |
+| 38 | Major | invoices | F | Metric colours mislead and rely on colour alone: Outstanding down 14% and Avg. days to pay down 3 are red although both decreases are good; no sign or arrow; green 3.28:1 | `invoices.html:64-66`, `styles.css:98-99` | VR4.6 | Colour by good/bad per metric, add arrow and sign ("down 14% vs Aug"), darker green |
+| 39 | Minor | invoices | F | Shadows are lit from the side/below and differ per panel (3px -2px and -4px 6px) | `styles.css:110-111` | VR5.1, VR5.2 | One small shadow scale, offset downward |
+| 40 | Minor | invoices | F | Sidebar links #1a6fe0 on #dfe6f5 are 3.82:1 | `styles.css:85` | VR4.5 | Darker blue or white background |
+| 41 | Major | invoices | H | Recurring empty state says only "No data." (2.32:1) while showing filter, sort and a disabled-looking Export; no way to create a recurring invoice; selects unlabeled | `invoices.html:82-89`, `styles.css:108` | VR7.5 | "No recurring invoices yet" + one call to action; hide filter/sort/export until there is data |
+| 42 | Minor | signup | B | Signup keeps the full nav with 8 utilities (Careers, Press, Investors) that pull people away from finishing | `signup.html:11-30` | UR6.1 | Reduce to identity, Home and Help/Log in |
+| 43 | Major | signup | C | "Clear form" reset is the same solid blue as Submit and sits first; "Submit" is vague; "Cancel my subscription" appears on a signup form | `signup.html:67-69` | VR1.9, UR9 | Remove reset and cancel link; single "Create account" button |
+| 44 | Critical | signup | H | Blocks: creating an account with a screen reader. 11 of 12 controls have no label (placeholders only, the Occupation select unnamed); "Full name" is a span not tied to its input | `signup.html:40-57` | UR10.5 | Visible `<label for>` on every control |
+| 45 | Critical | signup | G | Harm: a "free account" form demands date of birth, annual household income, full card number, home address, phone and occupation, sensitive data the task does not need | `signup.html:43-57` | UR9, UR11 | Ask only name, email, password; collect billing details when a paid feature is used |
+| 46 | Major | signup | G | Punishing formats: phone digits-only `pattern`, "MM/DD/YYYY exactly", card "no spaces or dashes" `pattern` | `signup.html:43`, `signup.html:47`, `signup.html:57` | UR8, UR9 | Accept any format and normalize |
+| 47 | Major | signup | G | "Error: invalid input." is always visible, generic, and tied to no field | `signup.html:58` | UR9 | Show specific errors next to the field only after a mistake |
+| 48 | Minor | signup | G | 89-word instructions explain how to click fields and use a drop-down; no value of signing up shown; "Your privacy is very important to us" is fake sincerity | `signup.html:36`, `signup.html:71` | UR5, UR8 | Delete; one line on what the account gets and the time it takes |
+| 49 | Minor | signup | D | Inputs stretch to 1270px; label-to-input gap (10px) equals field-to-field gap | `styles.css:114`, `styles.css:118-120` | VR2.4, VR2.5 | Max-width ~420px; label gap 4-6px, field gap 16-24px |
+| 50 | Minor | signup | H | Three avatar images have no alt and no explanation of why they are on the form | `signup.html:61-63` | UR10.5, UR5 | Remove, or `alt=""` with a real caption |
+| 51 | Minor | signup | H | Help paragraph uses nested em giving 11.5px "tiny" text for a rule users must follow ("Fields cannot be left blank") | `signup.html:36`, `styles.css:116-117` | VR3.1, UR9 | Remove the rule (mark optional fields instead) or set it at 14px |
+
+## System health
+Enumerated from scan.py: font sizes 14 (including 3 em values), weights 2 (700 and 300; 300 is under the 400 floor), line-heights 1 (1.2), colors 22 (greys 15, plus pure black x3), spacing values 18, shadows 2 (both mis-lit), radii 3, borders 17 declarations, tokens 0 (0 of 199 declarations use `var()`), media queries 0, interactive state rules 0 (:hover/:focus/:active/:disabled). There is no design system: no palette, no spacing or type scale, no elevation scale, no responsive layout, no focus styles. Consolidate into a small set of CSS variables (8 to 10 greys, one blue primary with shades, danger/success/warning shades that pass 4.5:1, spacing 4-64, type 12-30) and a single button component with primary/secondary/tertiary roles.
+
+## What's working
+- The primary blue #1a6fe0 carries white text at 4.78:1, and the red #e01a1a at 4.85:1: those two fills can stay in the palette.
+- The system font stack is a sound UI typeface choice.
+- The invoice data and the Sent table are real and specific (numbers, clients, dates, amounts), and the three feature bullets on the landing page describe concrete value; that content should lead the redesigned screens.
+- `lang="en"` and a viewport meta tag are present on every screen.
+- "Archive" per row is link-styled rather than a solid button, following the rule that repeated row actions are never primary.
+
+## Not verified
+- Behaviour: nothing is wired (44 `#` links, no scripts beyond two inline handlers), so no flow could be completed; loading, success and real error states do not exist to inspect.
+- Keyboard and screen-reader run-throughs were not performed; focus visibility is inferred from the absence of focus rules.
+- Text-size bump not tested in a browser; fixed-height inputs (24-26px) suggest clipping.
+- Missing image files (icons, people) are fixture artifacts; their real content is unknown.
+- Whether "Hive", "Pulse" and "Toolbox" are real sections and what they contain needs the owner.
+- Given the Criticals on the signup funnel, a short usability test (5 users: "you want to bill a client, sign up and send your first invoice") is recommended; see `usability-test-script.md`.

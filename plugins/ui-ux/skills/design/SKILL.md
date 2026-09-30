@@ -1,6 +1,9 @@
 ---
 name: design
 description: Create, refactor, or analyze the UI/UX of any app (web, mobile, desktop) using principles from Refactoring UI and Don't Make Me Think. Use when asked to design a screen, page, component, or flow; make a UI look better, more polished, or more professional; improve, clean up, or redesign an existing interface; audit, review, or critique UI, UX, or usability; or fix visual hierarchy, spacing, layout, typography, color palette, contrast, shadows/depth, navigation, landing/home page clarity, microcopy, forms, empty states, or accessibility. Also use to set up design tokens (spacing, type, color, shadow scales) or to plan a usability test. Modes - create, refactor, analyze, tokens, test-plan.
+allowed-tools:
+  - Bash(python "${CLAUDE_SKILL_DIR}/scripts/*)
+  - Bash(python3 "${CLAUDE_SKILL_DIR}/scripts/*)
 ---
 
 # UI/UX: create, refactor, analyze
@@ -32,12 +35,26 @@ Arguments: `$ARGUMENTS`
 - Torn between analyze and refactor: analyze, present the top fixes, and change files only if changes were asked for.
 - Act immediately; no greeting or menu. If you can't ask questions (running as a subagent or told not to), make sensible assumptions and state them.
 
+## Size the job
+
+Pick the size before reading any reference file; it decides how much of the workflow below applies. The scripts and validators run at every size (they are fast and they carry most of the quality); what scales is reading, screens covered, and optional passes.
+
+| Size | When | Read | Run and check | Skip |
+|---|---|---|---|---|
+| **Small** | One component, one element, or one named property ("fix the button contrast", "tighten this card's spacing") | `core-card.md`, plus only the rules file and checklist section the task touches | `scan.py` on the touched files; one screenshot of the screen it lives on (add 400px if layout changed); `contrast.py` on any color you set; for refactors, still snapshot and run `check_refactor.py` | full A to H pass, other screens, ambition pass, formal report (answer in a few lines: what changed, rule id, what you verified) |
+| **Standard** | One or two screens, or one form or flow step | `core-card.md`, both rules files, and the mode's files from the table above | the full workflow for the screens in scope, desktop and 400px | screens outside scope (list them as not covered) |
+| **Full** | Whole app, several screens, a redesign, or any audit the user will share | everything the mode lists | the full workflow, every screen | nothing |
+
+When unsure between two sizes, take the larger. Say which size you picked in one line so the user can ask for more.
+
 ## Always do first
 
 1. **Ground truth.** Find the UI code, styles, tokens/theme, component library; identify platform and framework. Read before judging.
 2. **See it and measure it** (`references/measuring.md`): run `scripts/scan.py` on the UI source and `scripts/screenshot.py` on the screens. Browser tools usually refuse `file://`; the script doesn't need a server. If you truly can't render, say so, and still compute contrast from the code.
 3. **Respect what exists.** Use the project's tokens, components, and conventions. Extend; never add a parallel system or a dependency unasked.
 4. **Name the top ~3 user tasks.** Everything is judged against making those obvious and easy.
+
+Work in parallel: read the reference files you need in one turn, and run `scan.py` and `screenshot.py` in the same turn (pass every screen to one `screenshot.py` call; it shoots them concurrently).
 
 ## Mode: analyze
 
@@ -49,11 +66,12 @@ Follow `references/audit-checklist.md` exactly (after reading both rules files):
 - **Last step: run `scripts/check_report.py` on the saved report and fix everything it flags** before delivering.
 - Note what works (never praise something the checklist fails) and what you couldn't verify.
 - Don't modify the project's files. Writing the report to a file is fine when asked.
+- For a whole multi-screen app you may delegate to the `ui-ux-designer` agent and relay its report.
 
 ## Mode: refactor
 
 0. **Snapshot first.** Copy the UI source to a scratch folder before editing anything: it is the `--before` for the fidelity check.
-1. **Mini-audit** (condensed analyze). List what you'll fix, in priority order. Confirm first only if the change is large or alters product behaviour and you're able to ask; otherwise proceed.
+1. **Mini-audit** (condensed analyze). List what you'll fix, in priority order. Confirm first only if the change is large or alters product behaviour and you're able to ask; otherwise proceed. If the user asked to review before implementation, publish the proposed top screen as a mockup (same way as in create mode) and wait for approval.
 2. **Fix in this order:** words and clarity; hierarchy (one primary element and action per screen, demote the rest); spacing and layout; typography; color and contrast; depth and borders; states; accessibility. Use `references/recipes.md` for concrete treatments.
 3. **Rules of engagement**
    - Prefer removing to adding; don't fix confusion with more explanatory text.
@@ -70,6 +88,8 @@ Follow `references/audit-checklist.md` exactly (after reading both rules files):
 ## Mode: create
 
 Read `references/design-process.md`, the two rules files, `recipes.md`, and `design-tokens.md` if the project has no system.
+
+**Preview first, only when the user asks for one** ("show me first", "mockup", "preview before building"): once steps 1 to 5 are settled, publish a one-page HTML mockup with the sample data through an Artifact tool if one is available (otherwise write it to a scratch file and open it), share the link, and wait for approval before touching the project's code. Don't do this unasked: it adds a round trip.
 
 1. Understand product, users, top tasks, platform, existing design system. Ask only if it can't be inferred and changes the design.
 2. Feature first, smallest useful version. No affordances for things that won't work.

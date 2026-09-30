@@ -31,11 +31,14 @@ import os
 import pathlib
 import re
 import shutil
+import signal
 import subprocess
 import sys
 import tempfile
 import threading
+import time
 import zlib
+from concurrent.futures import ThreadPoolExecutor
 
 CANDIDATES = [
     r"C:\Program Files\Google\Chrome\Application\chrome.exe",
@@ -105,28 +108,71 @@ def looks_blank(png_path):
         return False
 
 
+def png_complete(path):
+    """True once the file ends with the PNG IEND chunk, i.e. the browser finished writing it."""
+    try:
+        with open(path, "rb") as fh:
+            fh.seek(0, os.SEEK_END)
+            if fh.tell() < 20:
+                return False
+            fh.seek(-12, os.SEEK_END)
+            return fh.read(12)[4:8] == b"IEND"
+    except OSError:
+        return False
+
+
+def stop(proc):
+    """Kill the browser and its helper processes (Chrome spawns several)."""
+    if proc.poll() is None:
+        try:
+            if os.name == "nt":
+                subprocess.run(["taskkill", "/F", "/T", "/PID", str(proc.pid)],
+                               stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+            else:
+                os.killpg(proc.pid, signal.SIGKILL)
+        except OSError:
+            proc.kill()
+    try:
+        proc.wait(timeout=5)
+    except subprocess.TimeoutExpired:
+        pass
+
+
 def shoot(browser, url, out_png, width, height, wait):
-    """Try new headless, then legacy headless. A private profile dir avoids attaching to a running browser."""
+    """Try new headless, then legacy headless. A private profile dir avoids attaching to a running browser.
+    Recent Chrome writes the screenshot and then may never exit, so wait for a complete PNG, not for the process."""
     out_png = str(pathlib.Path(out_png).resolve())
+    limit = wait / 1000 + 30
     last = "no attempt"
     for mode in ("--headless=new", "--headless"):
         profile = tempfile.mkdtemp(prefix="uiux-shot-")
+        proc = None
         try:
             if os.path.exists(out_png):
                 os.remove(out_png)
             cmd = [browser, mode, "--disable-gpu", "--hide-scrollbars", "--no-first-run",
                    "--no-default-browser-check", "--disable-extensions",
+                   # keep the 400px frame's app in-process, or --virtual-time-budget won't wait for it to render
+                   "--disable-site-isolation-trials", "--disable-features=IsolateOrigins,site-per-process",
                    f"--user-data-dir={profile}", f"--window-size={width},{height}",
                    f"--virtual-time-budget={wait}", f"--screenshot={out_png}", url]
-            try:
-                subprocess.run(cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, timeout=120)
-            except subprocess.TimeoutExpired:
-                last = "timeout"
-                continue
-            if os.path.isfile(out_png) and os.path.getsize(out_png) > 0:
+            proc = subprocess.Popen(cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
+                                    start_new_session=(os.name != "nt"))
+            end = time.monotonic() + limit
+            while time.monotonic() < end:
+                if png_complete(out_png):
+                    return None
+                if proc.poll() is not None:
+                    break
+                time.sleep(0.2)
+            if png_complete(out_png):
                 return None
+            if proc.poll() is None:
+                return f"timeout after {limit:.0f}s"  # a hang would repeat in the other mode: don't retry
             last = f"{mode} wrote no image"
         finally:
+            if proc:
+                stop(proc)
             shutil.rmtree(profile, ignore_errors=True)
     return last
 
@@ -170,36 +216,42 @@ def main():
         return 1
     os.makedirs(a.out, exist_ok=True)
     height = 4000 if a.full else a.height
-    failed = False
+    jobs = []
     for t in a.targets:
-        jobs = [(a.width, height, "")]
+        jobs.append((t, a.width, height, ""))
         if a.mobile:
-            jobs.append((400, 4000 if a.full else 1600, "-mobile"))
-        for w, h, suffix in jobs:
-            png = os.path.join(a.out, f"{slug(t)}{suffix}.png")
-            err, server = None, None
-            tmp = tempfile.mkdtemp(prefix="uiux-frame-") if w < MIN_WINDOW else None
-            url, win_w = to_url(t), w
-            if tmp:
-                (url, server), win_w = framed(url, w, h, tmp), w + 120
-            for b in browsers:
-                err = shoot(b, url, png, win_w, h, a.wait)
-                if err is None:
-                    break
-            if server:
-                server.shutdown()
-            if tmp:
-                shutil.rmtree(tmp, ignore_errors=True)
-            if err is None and looks_blank(png):
-                failed = True
-                print(f"BLANK {png}  (rendered empty: is the app served over http? does it need a longer --wait? "
-                      "does it forbid framing? for the mobile shot try --width 500)")
-            elif err is None:
-                print(f"OK {png} {os.path.getsize(png)}")
-            else:
-                failed = True
-                print(f"FAIL {t} ({w}px): {err}")
-    return 1 if failed else 0
+            jobs.append((t, 400, 4000 if a.full else 1600, "-mobile"))
+
+    def capture(job):
+        """One image. Returns (failed, line to print)."""
+        t, w, h, suffix = job
+        png = os.path.join(a.out, f"{slug(t)}{suffix}.png")
+        err, server = None, None
+        tmp = tempfile.mkdtemp(prefix="uiux-frame-") if w < MIN_WINDOW else None
+        url, win_w = to_url(t), w
+        if tmp:
+            (url, server), win_w = framed(url, w, h, tmp), w + 120
+        for b in browsers:
+            err = shoot(b, url, png, win_w, h, a.wait)
+            if err is None:
+                break
+        if server:
+            server.shutdown()
+        if tmp:
+            shutil.rmtree(tmp, ignore_errors=True)
+        if err is None and looks_blank(png):
+            return True, (f"BLANK {png}  (rendered empty: is the app served over http? does it need a longer --wait? "
+                          "does it forbid framing? for the mobile shot try --width 500)")
+        if err is None:
+            return False, f"OK {png} {os.path.getsize(png)}"
+        return True, f"FAIL {t} ({w}px): {err}"
+
+    # Each shot is its own browser with its own profile, so a few can run at once.
+    with ThreadPoolExecutor(max_workers=min(4, len(jobs))) as pool:
+        results = list(pool.map(capture, jobs))
+    for _failed, line in results:
+        print(line)
+    return 1 if any(f for f, _ in results) else 0
 
 
 if __name__ == "__main__":

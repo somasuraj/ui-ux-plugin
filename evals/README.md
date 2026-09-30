@@ -23,6 +23,7 @@ How the plugin was tested, and everything needed to repeat it. None of this is i
 |---|---|---|---|---|---|---|
 | 1 HTML | no skill | 96.2% | 5 | 11 | 72 | none |
 | 1 HTML | with skill (final round) | 96.2% | 0 | 4 (4) | 59 | all 8 correct |
+| 1 HTML | with skill v1.1 (sizing, deduped rules, fast screenshots; `R6`, graded in `G7`) | 96.2% | 0 | 3 (3) | 51 | correct |
 | 2 React + Tailwind | no skill | 93.0% | 4 | 11 (7) | 79 | none |
 | 2 React + Tailwind | with skill | 97.0% | 0 | 4 (4) | 43 | plausible, slightly low |
 
