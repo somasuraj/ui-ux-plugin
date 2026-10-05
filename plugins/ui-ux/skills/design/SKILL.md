@@ -56,6 +56,8 @@ When unsure between two sizes, take the larger. Say which size you picked in one
 
 Work in parallel: read the reference files you need in one turn, and run `scan.py` and `screenshot.py` in the same turn (pass every screen to one `screenshot.py` call; it shoots them concurrently).
 
+**Keep context lean.** This file is already loaded: don't re-read it. Read each reference file once, source with the Read tool (offset/limit for big files) rather than `cat`/`sed -n`, and each screenshot once. Use the scripts rather than writing your own screenshot or scan helpers. Never wait on background work with a sleep/`until` loop; run it in the foreground with a timeout or wait for its completion notice. Run fast scoped checks while editing and the full build/tests/screenshot set once at the end.
+
 ## Mode: analyze
 
 Follow `references/audit-checklist.md` exactly (after reading both rules files): scope, mechanical pass, see it, first-glance pass, **checklist pass on every screen in scope**, triage, report in its format.
@@ -66,7 +68,7 @@ Follow `references/audit-checklist.md` exactly (after reading both rules files):
 - **Last step: run `scripts/check_report.py` on the saved report and fix everything it flags** before delivering.
 - Note what works (never praise something the checklist fails) and what you couldn't verify.
 - Don't modify the project's files. Writing the report to a file is fine when asked.
-- For a whole multi-screen app you may delegate to the `ui-ux-designer` agent and relay its report.
+- For a whole multi-screen app you may delegate to the `ui-ux:ui-ux-designer` agent and relay its report.
 
 ## Mode: refactor
 

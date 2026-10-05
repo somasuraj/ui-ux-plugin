@@ -1,7 +1,7 @@
 {
   "name": "ui-ux",
   "displayName": "UI/UX Design Toolkit",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Create, refactor, and audit app UI/UX with principles from Refactoring UI and Don't Make Me Think: a design skill with checklists, tokens and recipes, scanner / screenshot / contrast / report and refactor-fidelity scripts, five commands, and a ui-ux-designer agent.",
   "author": {
     "name": "somasuraj",

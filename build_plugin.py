@@ -12,7 +12,7 @@ import json
 import os
 import sys
 
-VERSION = "1.1.0"
+VERSION = "1.2.0"
 HERE = os.path.dirname(os.path.abspath(__file__))
 PLUGIN = os.path.join(HERE, "plugins", "ui-ux")
 MAIN = "design"            # main skill name inside the plugin  ->  /ui-ux:design

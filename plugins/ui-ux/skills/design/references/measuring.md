@@ -18,6 +18,7 @@ python <skill-dir>/scripts/screenshot.py "http://localhost:5173/invoices?state=e
 - Write screenshots to a scratch/temp directory, not into the project.
 - Capture each state you can reach by URL (query params, routes). For states you can't reach, read the component code and say so.
 - No browser available: ask the user for screenshots, continue code-only, and list "not rendered" under Not verified.
+- **Screenshots are the most expensive thing you read**: each image stays in context for the rest of the task. Read each PNG once and note what you saw; don't re-open it. Shoot before and after for what changed, not every screen again after each edit. Prefer the default viewport over `--full` unless the problem is below the fold. Anything countable (sizes, colors, contrast ratios, label counts) comes from `scan.py` and `contrast.py`, not from looking.
 
 Views worth taking: each key screen at desktop width, the same at 400px, the empty state, an error state, a long-content case.
 
